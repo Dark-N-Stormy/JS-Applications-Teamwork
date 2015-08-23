@@ -3,3 +3,4 @@ The JS Applications Teamwork repository
 
 ##Contributors
 - Atanas Atanasov (hackohackob)
+- Nikolay Petrov (nlpcsh)
