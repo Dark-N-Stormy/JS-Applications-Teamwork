@@ -5,3 +5,4 @@ The JS Applications Teamwork repository
 - Atanas Atanasov (hackohackob)
 - Nikolay Petrov (nlpcsh)
 - Decho Dechev (decho.D)
+- velimira.madjarova (alexizvely)
