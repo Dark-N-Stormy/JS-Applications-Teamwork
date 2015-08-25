@@ -6,3 +6,4 @@ The JS Applications Teamwork repository
 - Nikolay Petrov (nlpcsh)
 - Decho Dechev (decho.D)
 - velimira.madjarova (alexizvely)
+- Georgi Yonchev (g.yonchev)
