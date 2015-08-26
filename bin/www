@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+var SystemJS =  require('systemjs');
+var debug = require('debug')('JS-Applications-Teamwork');
+var app_server = require('../app');
+
+app_server.app.set('port', process.env.PORT || 3000);
+
+var server = app_server.server.listen(app_server.app.get('port'), function () {
+    console.log('Express server listening on port ' + server.address().port);
+});
