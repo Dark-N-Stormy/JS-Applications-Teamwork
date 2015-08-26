@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'BootstrapIcons';
+  src: url("/bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf");
+}
+
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}

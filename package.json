@@ -1,0 +1,49 @@
+{
+  "name": "TSN",
+  "version": "0.0.1",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./bin/www",
+    "postinstall": "./node_modules/bower/bin/bower install"
+  },
+  "description": "Social network onyl for students at Telerik Academy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dark-N-Stormy/JS-Applications-Teamwork.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Dark-N-Stormy/JS-Applications-Teamwork/issues"
+  },
+  "author": "Dark&Stormy Team @ Telerik Academy 2015-2016",
+  "contributors": [
+    {
+      "name": "Atanas Atanasov"
+    },
+    {
+      "name": "Nikolay Petrov"
+    },
+    {
+      "name": "Decho Dechev"
+    },
+    {
+      "name": "Velimira Madjarova"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^2.9.34",
+    "body-parser": "~1.8.1",
+    "bower": "^1.5.1",
+    "cookie-parser": "~1.3.3",
+    "debug": "~2.0.0",
+    "express": "~4.9.0",
+    "express-handlebars": "^2.0.1",
+    "jade": "~1.6.0",
+    "mongoose": "^4.0.8",
+    "morgan": "~1.3.0",
+    "serve-favicon": "~2.1.3",
+    "sha1": "^1.1.1",
+    "socket.io": "^1.3.6",
+    "systemjs": "^0.18.16"
+  }
+}
