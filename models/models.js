@@ -1,13 +1,25 @@
 var mongoose=require('mongoose'),
-    Schema= mongoose.Schema;
+    Schema= mongoose.Schema,
+    passportLocalMongoose = require('passport-local-mongoose');
 
-var UserSchema=new Schema({
-    id:Number,
+var UserSchema = new Schema({
     username:String,
-    pass:String,
-    token:String
+    avatar:String,
+    active:Boolean,
+    dateOfRegistration:Date,
+    additional:Schema.Types.Mixed
 });
 
-mongoose.model('users',UserSchema);
+var MessageSchema = new Schema({
+    sender: Schema.Types.ObjectId,
+    receiver: Schema.Types.ObjectId,
+    dateTime: Date,
+    message: String
+});
+
+UserSchema.plugin(passportLocalMongoose);
+
+mongoose.model('messages',MessageSchema);
+module.exports = mongoose.model('users',UserSchema);
 
 

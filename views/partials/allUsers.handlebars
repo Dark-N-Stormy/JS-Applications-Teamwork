@@ -1,0 +1,11 @@
+<div class="all-users">
+    <form class="users-search-form">
+        <input type="text" class="form-control" placeholder="Seacrh..">
+    </form>
+    {{#each users}}
+        <div class="single-user{{#if this.active}} active{{/if}}" data-user-id="{{this.id}}">
+            <img src="{{this.avatar}}" width="50" height="50" class="single-user-image">
+            <span class="single-user-username">{{this.username}}</span>
+        </div>
+    {{/each}}
+</div>

@@ -1,0 +1,30 @@
+{
+  "name": "TSN",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Dark-N-Stormy/JS-Applications-Teamwork",
+  "authors": [
+    "Dark&Stormy Team"
+  ],
+  "description": "TelerikAcademy Social Network",
+  "main": "app.js",
+  "keywords": [
+    "Telerik",
+    "TelerikAcademy",
+    "Social",
+    "Network"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "jquery": "~2.1.4",
+    "malihu-custom-scrollbar-plugin": "~3.0.9",
+    "system.js": "~0.18.16"
+  }
+}

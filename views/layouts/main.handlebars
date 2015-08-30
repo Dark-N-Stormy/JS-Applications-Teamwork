@@ -5,12 +5,22 @@
     <title>{{title}}</title>
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-    <div class="container-fluid">
+    <div class="wrapper">
+        {{>navigation}}
         {{{body}}}
     </div>
+    {{#if user}}
+        <script>
+            currentUser = {
+                id:'{{{user.id}}}',
+                username:'{{{user.username}}}'
+            };
+        </script>
+    {{/if}}
     <script src="/bower_components/system.js/dist/system.js"></script>
     <script src="/javascripts/main.js"></script>
 </body>

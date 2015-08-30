@@ -1,24 +1,67 @@
-<div class="jumbotron">
-    <h1>Index page</h1>
-    <p>Something else here</p>
+<div class="main-container container-fluid">
+    <div class="jumbotron" >
+        {{#if user}}
+            <h1>Hello, {{user.username}}, nice to see you back :)</h1>
+        {{else}}
+            <h1>Welcome to TelerikAcademy Social Network</h1>
+        {{/if}}
 
-    <p class="input-group" style="width:100%; text-align: center">
-        <input type="text" placeholder="Send a message" class="form-control"/>
-        <a class="btn btn-primary btn-lg" href="#" role="button">Send</a>
-    </p>
 
+        <p class="input-group" style="width:100%; text-align: center">
+            <input type="text" placeholder="Send a message" class="form-control"/>
+            <a class="btn btn-primary btn-lg" href="#" role="button">Send</a>
+        </p>
+    </div>
+    <div class="col-xs-6 panel panel-success sent-messages">
+        <div class="panel-heading">
+            <h3 class="panel-title">Sent</h3>
+        </div>
+        <div class="panel-body">
+        </div>
+    </div>
+    <div class="col-xs-6 panel panel-success recieved-messages">
+        <div class="panel-heading">
+            <h3 class="panel-title">Recieved</h3>
+        </div>
+        <div class="panel-body">
+        </div>
+    </div>
+    {{#if user}}
+        <div class="chat-bar-wrapper">
+            <div class="chat-bar">
+                <div class="chat empty-chat" data-partner-id="empty">
+                    <span class="chat-title"></span>
+                    <div class="chat-body">
+                        <div class="chat-top-bar">
+                            <img src="">
+                            <span class="close glyphicon glyphicon-remove"></span>
+                            <span class="minimize glyphicon glyphicon-triangle-bottom"></span>
+                        </div>
+                        <div class="chat-messages">
+
+                        </div>
+                        <textarea width="100%" height="30px" placeholder="Send a message"></textarea>
+                        <span class="chat-send glyphicon glyphicon-circle-arrow-up"></span>
+                    </div>
+                </div>
+                <div class="chat group-chat" data-partner-id="group">
+                    <span class="chat-title"> Group Chat</span>
+                    <div class="chat-body">
+                        <div class="chat-top-bar">
+                            <span class="close glyphicon glyphicon-remove"></span>
+                            <span class="minimize glyphicon glyphicon-triangle-bottom"></span>
+                        </div>
+                        <div class="chat-messages">
+
+                        </div>
+                        <textarea width="100%" height="30px" placeholder="Send a message"></textarea>
+                        <span class="chat-send glyphicon glyphicon-circle-arrow-up"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/if}}
 </div>
-<div class="col-xs-6 panel panel-success sent-messages">
-    <div class="panel-heading">
-        <h3 class="panel-title">Sent</h3>
-    </div>
-    <div class="panel-body">
-    </div>
-</div>
-<div class="col-xs-6 panel panel-success recieved-messages">
-    <div class="panel-heading">
-        <h3 class="panel-title">Recieved</h3>
-    </div>
-    <div class="panel-body">
-    </div>
+<div class="all-users-container">
+    {{>allUsers}}
 </div>
