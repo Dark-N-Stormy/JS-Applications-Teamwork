@@ -201,7 +201,7 @@ $('.users-search-form .form-control').on('keyup',function(e){
        $('.all-users').append($divForNoMatches);
     }
     else{
-        $( "div" ).remove( ".no-matches" );
+        $('div').remove('.no-matches');
     }
     counterOfHiddenUsers=0;
 });
