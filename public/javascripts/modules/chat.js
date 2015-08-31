@@ -174,3 +174,34 @@ $('.chat .chat-send').on('click',function(){
         socketHandler.sendMessage(message, receiver);
     }
 });
+
+var $divForNoMatches = $('<div></div>').addClass('no-matches'),
+    $spanForNoMatches = $('<span>No users found</span>');
+
+$spanForNoMatches.appendTo($divForNoMatches);
+
+$('.users-search-form .form-control').on('keyup',function(e){
+
+    var $searchText = $(this).val(),
+        $listOfUsers = $('.all-users').children('div.single-user'),
+        counterOfHiddenUsers = 0,
+        lenghtOfAllUsers = $listOfUsers.size();
+    $.each($listOfUsers, function(){
+        var $userName = $(this).children('.single-user-username').html(),
+            $this = $(this);
+        if ($userName.toLowerCase().indexOf($searchText.toLowerCase()) < 0) {
+            $this.hide();
+            counterOfHiddenUsers++;
+        }
+        else{
+            $this.show();
+        }
+    });
+    if(counterOfHiddenUsers === lenghtOfAllUsers){
+       $('.all-users').append($divForNoMatches);
+    }
+    else{
+        $( "div" ).remove( ".no-matches" );
+    }
+    counterOfHiddenUsers=0;
+});
