@@ -13,14 +13,15 @@
         {{>navigation}}
         {{{body}}}
     </div>
-    {{#if user}}
+    {{#ifCond user (userToken user.id)}}
         <script>
             currentUser = {
                 id:'{{{user.id}}}',
-                username:'{{{user.username}}}'
+                username:'{{{user.username}}}',
+                token:'{{userToken user.id }}'
             };
         </script>
-    {{/if}}
+    {{/ifCond}}
     <script src="/bower_components/system.js/dist/system.js"></script>
     <script src="/javascripts/main.js"></script>
 </body>
