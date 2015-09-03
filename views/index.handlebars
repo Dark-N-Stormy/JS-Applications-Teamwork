@@ -1,10 +1,10 @@
 <div class="main-container container-fluid">
     <div class="jumbotron" >
-        {{#if user}}
+        {{#ifCond user (userToken user.id)}}
             <h1>Hello, {{user.username}}, nice to see you back :)</h1>
         {{else}}
             <h1>Welcome to TelerikAcademy Social Network</h1>
-        {{/if}}
+        {{/ifCond}}
 
 
         <p class="input-group" style="width:100%; text-align: center">
@@ -26,7 +26,7 @@
         <div class="panel-body">
         </div>
     </div>
-    {{#if user}}
+    {{#ifCond user (userToken user.id)}}
         <div class="chat-bar-wrapper">
             <div class="chat-bar">
                 <div class="chat empty-chat" data-partner-id="empty">
@@ -34,33 +34,35 @@
                     <div class="chat-body">
                         <div class="chat-top-bar">
                             <img src="">
+                            <span class="chat-name">Empty Chat</span>
                             <span class="close glyphicon glyphicon-remove"></span>
                             <span class="minimize glyphicon glyphicon-triangle-bottom"></span>
                         </div>
-                        <div class="chat-messages">
+                        <div class="chat-messages mCustomScrollbar" data-mcs-theme="dark">
 
                         </div>
                         <textarea width="100%" height="30px" placeholder="Send a message"></textarea>
-                        <span class="chat-send glyphicon glyphicon-circle-arrow-up"></span>
+                        <span class="chat-send glyphicon glyphicon-send"></span>
                     </div>
                 </div>
                 <div class="chat group-chat" data-partner-id="group">
                     <span class="chat-title"> Group Chat</span>
                     <div class="chat-body">
                         <div class="chat-top-bar">
-                            <span class="close glyphicon glyphicon-remove"></span>
+                            <img src="/images/group-chat.png">
+                            <span class="chat-name">Group Chat</span>
                             <span class="minimize glyphicon glyphicon-triangle-bottom"></span>
                         </div>
-                        <div class="chat-messages">
+                        <div class="chat-messages mCustomScrollbar" data-mcs-theme="dark">
 
                         </div>
                         <textarea width="100%" height="30px" placeholder="Send a message"></textarea>
-                        <span class="chat-send glyphicon glyphicon-circle-arrow-up"></span>
+                        <span class="chat-send glyphicon glyphicon-send"></span>
                     </div>
                 </div>
             </div>
         </div>
-    {{/if}}
+    {{/ifCond}}
 </div>
 <div class="all-users-container">
     {{>allUsers}}
