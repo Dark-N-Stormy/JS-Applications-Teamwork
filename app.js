@@ -10,6 +10,7 @@ var exphbs  = require('express-handlebars');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var expressSession = require('express-session');
+var crypto = require('crypto');
 var onlineUsers = [];
 
 //Models
@@ -20,7 +21,7 @@ var db = require('./data/db');
 var userData = require('./data/user');
 
 //Routes
-var routes = require('./routes/index');
+var routes = require('./routes/index')(onlineUsers);
 var users = require('./routes/users');
 var register = require('./routes/register');
 
@@ -33,16 +34,38 @@ var io = require('socket.io')(server);
 var ioHandler = require('./ioHandler')(io,onlineUsers);
 
 
-db.connect('mongodb://tsn:BkD2#+9hns_E)6Cj@dogen.mongohq.com:10011/tsn')
+//db.connect('mongodb://tsn:BkD2#+9hns_E)6Cj@dogen.mongohq.com:10011/tsn');
+db.connect('mongodb://127.0.0.1:27017/tsn');
+
+var handlebarsConfig = exphbs.create({
+    helpers: {
+        userToken: function (userId) {
+            for(var i=0; i<onlineUsers.length;i+=1) {
+                if(onlineUsers[i].id === userId){
+                    return onlineUsers[i].token;
+                }
+            }
+
+            return false;
+        },
+        ifCond: function(v1, v2,options){
+            if(v1 && v2) {
+                return options.fn(this);
+            }
+            return options.inverse(this);
+        }
+    },
+    defaultLayout: 'main'
+});
 
 // view engine & views setup
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', handlebarsConfig.engine);
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
 
 
 //app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -53,6 +76,7 @@ app.use(expressSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(addTokenForSocket);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
@@ -101,4 +125,24 @@ module.exports = {
     app:app,
     server:server
 };
+
+function addTokenForSocket(req,res,next) {
+    if(req.user && req.path==='/'){
+        for(var i=0; i<onlineUsers.length;i+=1){
+            if(onlineUsers[i].id === req.user.id){
+                next();
+                return;
+            }
+        }
+        onlineUsers.push({
+            user:req.user.username,
+            id:req.user.id,
+            sockets:[],
+            token: crypto.randomBytes(64).toString('hex'),
+            intervals: []
+        });
+    }
+
+    next();
+}
 

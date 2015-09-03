@@ -14,7 +14,8 @@ var MessageSchema = new Schema({
     sender: Schema.Types.ObjectId,
     receiver: Schema.Types.ObjectId,
     dateTime: Date,
-    message: String
+    message: String,
+    seen: Boolean
 });
 
 UserSchema.plugin(passportLocalMongoose);
