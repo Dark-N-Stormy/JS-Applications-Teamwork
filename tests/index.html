@@ -6,6 +6,14 @@
 </head>
 
 <body>
+  <div class="chat-messages"></div>
+  <div class="all-users-container mCustomScrollbar"></div>
+  <div class="chat-bar-wrapper">
+    <div class="chat-bar"></div>
+    <div class="chat"></div>
+  </div>
+
+
   <div id="mocha"></div>
   <script src="../bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/mocha/mocha.js"></script>
@@ -14,12 +22,13 @@
   <script src="node_modules/sinon/pkg/sinon-1.16.1.js"></script>
   <script src="bower_components/sinon-chai/lib/sinon-chai.js"></script>
 
+  <script src="../public/javascripts/Class.js"></script>
+
   <script type="text/javascript">
     mocha.setup('bdd');
     var expect = chai.expect;
   </script>
   
-  <script src="../public/javascripts/Class.js"></script>
 
   <!-- Unit tests -->
   <script src="../public/javascripts/modules/chat.js"></script>
