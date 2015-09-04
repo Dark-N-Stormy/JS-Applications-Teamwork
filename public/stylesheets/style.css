@@ -6,12 +6,78 @@
 body {
   font: 14px "Century Gothic", Helvetica, Arial, sans-serif;
 }
+
+form {
+    margin: 0 auto;
+}
+
+form .btn {
+    line-height: 25px;
+    font-size: 16px;
+}
+
+.form-control {
+    text-align: center;
+}
+
+.modal {
+    text-align: center;
+}
+
+.separator {
+    background-color: #fff!important;
+}
+
+.spinner {
+    display: none;
+    height: 25px;
+    margin-left: 15px;
+}
+
+.login-error, .register-error {
+    padding: 20px 0;
+    color: #fff;
+    background-color: #e74c3c;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: none;
+}
+
 .wrapper {
     padding-top: 60px;
 }
 .main-container {
     width:80%;
     float:left;
+}
+
+.input-ask{
+    resize: none;
+    border-radius: 6px!important;
+    height:100px!important;
+}
+
+.btn-ask{
+    padding: 9px 20px;
+    font-size: 40px;
+    margin-top: 20px;
+}
+
+
+.panel-heading img {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.panel-heading .post-date{
+    float:right;
+    color:rgba(255,255,255,0.7);
+}
+
+.panel-body {
+    font-size:16px;
 }
 
 .chat-bar-wrapper {
@@ -155,6 +221,15 @@ body {
     padding-bottom: 10px;
 }
 
+.chat .chat-body .chat-messages .spinner{
+    margin: 0 auto;
+    display: block;
+    background-color: #71BF45;
+    padding:4px;
+    margin-top:5px;
+    display: none;
+}
+
 .chat .chat-body .chat-message{
     background-color: #95a5a6;
     display: inline-block;
@@ -166,6 +241,15 @@ body {
     color: #fff;
     white-space: normal;
     margin-left: 2px;
+    max-width: 90%;
+    word-break: break-word;
+}
+.chat .chat-body .chat-message.time-separator{
+    margin-top:10px;
+}
+
+.chat .chat-body .chat-message.unseen{
+    background-color: #66819C;
 }
 
 .chat .chat-body .chat-message.chat-message-sent{
@@ -203,6 +287,12 @@ body {
 .all-users-container .mCSB_inside>.mCSB_container{
     margin-right: 10px;
 }
+
+.no-matches {
+    text-align: center;
+    padding: 10px 0;
+}
+
 .users-search-form{
     margin:5px;
     margin-top:10px;
@@ -270,4 +360,10 @@ body {
 .chat-bar.mCustomScrollbar .mCustomScrollBox .mCSB_scrollTools{
     position: relative;
     top: -39px;
+}
+
+@media screen and (max-width: 1200px) {
+    .main-container{
+        width: 100%;
+    }
 }

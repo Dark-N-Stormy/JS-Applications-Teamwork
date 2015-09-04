@@ -5,6 +5,7 @@ function router(onlineUsers) {
     var User = require('../models/models');
     var router = express.Router();
     var userData = require('../data/user');
+    var postData = require('../data/posts');
     var messageData = require('../data/message');
     var app = require('../app.js');
 
@@ -20,43 +21,89 @@ function router(onlineUsers) {
                     }
                 });
 
+                postData.getPosts(10,0)
+                    .then(function(posts){
+                        posts = posts.map(function(post){
+                            post.dateTime = /*new Date(post.dateTime);*/
+                                    'asd';
 
-                res.render('index', {title: 'TSN', users: allUsers, user: req.user});
+                            return post;
+                        });
+
+                        res.render('index',
+                            {
+                                title: 'TSN',
+                                users: allUsers,
+                                user: req.user,
+                                posts: posts
+                            });
+                    });
             });
     });
 
-    router.get('/register', function (req, res) {
-        res.render('register', {});
-    });
-
     router.post('/register', function (req, res) {
-        var userDetails = {
-            username: req.body.username,
-            avatar: '/images/default-avatar.jpg',
-            active: true,
-            dateOfRegistration: Date.now()
-        };
+        console.log(req.body);
+        var username = req.body.username.toLowerCase(),
+            password = req.body.password,
+            userDetails = {
+                username: username,
+                avatar: '/images/default-avatar.jpg',
+                dateOfRegistration: Date.now()
+            };
 
-        User.register(new User(userDetails), req.body.password, function (err, account) {
+        if(!/^[A-z0-9-]+$/.test(username)){
+            return res.json({
+                error:true,
+                errorMessage:'Username must contain only letters, digits and dashes and must start with a letter'
+            });
+        } else if(username.length < 5) {
+            return res.json({
+                error:true,
+                errorMessage:'Username must be at least 5 symbols'
+            });
+        }  else if(password.length < 6) {
+            return res.json({
+                error:true,
+                errorMessage:'Password must be at least 6 symbols'
+            });
+        }
+
+        User.register(new User(userDetails), password, function (err, account) {
             if (err) {
-                return res.render('register', {
+                return res.json({
                     error: true,
-                    errorMessage: 'Sorry. That username already exists. Try again.'
+                    errorMessage: 'Sorry. That username already exists'
                 });
             }
 
             passport.authenticate('local')(req, res, function () {
-                res.redirect('/');
+                return res.json({
+                    error: false,
+                    success: true
+                });
             });
         });
     });
 
-    router.get('/login', function (req, res) {
-        res.render('login', {user: req.user});
-    });
+    router.post('/login', function (req, res, next) {
+        passport.authenticate('local', function (err, user, info) {
+            if (err) return next(err);
+            if (!user) {
+                return res.json({
+                    error: true,
+                    errorMessage: 'Login failed, please check your credentials and try again',
+                    success: false
+                });
+            }
 
-    router.post('/login', passport.authenticate('local'), function (req, res) {
-        res.redirect('/');
+            req.login(user, function (err) {
+                if (err) return next(err);
+                return res.json({
+                    err: false,
+                    success: true
+                });
+            });
+        })(req, res, next);
     });
 
     router.get('/logout', function (req, res) {

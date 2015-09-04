@@ -19,6 +19,8 @@ require('./models/models');
 //Data
 var db = require('./data/db');
 var userData = require('./data/user');
+console.log(userData);
+userData.passOnlineUsers(onlineUsers);
 
 //Routes
 var routes = require('./routes/index')(onlineUsers);
@@ -47,6 +49,20 @@ var handlebarsConfig = exphbs.create({
             }
 
             return false;
+        },
+        date: function (date) {
+            var monthNames = [
+                "January", "February", "March",
+                "April", "May", "June", "July",
+                "August", "September", "October",
+                "November", "December"
+            ];
+
+            var day = date.getDate();
+            var monthIndex = date.getMonth();
+            var year = date.getFullYear();
+
+            return day+' '+monthNames[monthIndex]+' '+year;
         },
         ifCond: function(v1, v2,options){
             if(v1 && v2) {

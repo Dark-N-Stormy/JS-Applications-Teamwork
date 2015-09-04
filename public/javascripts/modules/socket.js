@@ -45,31 +45,47 @@ var SocketHandler = Class.extend({
         data.token = currentUser.token;
         socket.emit('seen-all',data);
     },
+    getMessages: function(data){
+        data.myId = currentUser.id;
+        data.token = currentUser.token;
+      socket.emit('get-messages', data);
+    },
+    emitPost: function(post){
+        post.token = currentUser.token;
+        socket.emit('save-post', post);
+    },
+    changeAvatar:function(url){
+        console.log('will send avatar');
+      socket.emit('change-avatar', {
+          token:currentUser.token,
+          url:url,
+          id:currentUser.id
+      })
+    },
     registerSocketListeners: function() {
         socket.on('hello-client', function (msg) {
             console.log(msg);
         });
 
         socket.on('message', function (data) {
-            console.log(data);
+            //console.log(data);
             chatHandler.receivedMessage(data);
         });
 
         socket.on('unread',function(data){
-            console.log('got unread messages');
+            //console.log('got unread messages',data);
            for(var i=0;i<data.length;i+=1){
                chatHandler.unread(data[i])
            }
         });
 
-        //socket.on('disconnect',function(data){
-        //    if(data){
-        //        window.location.href =  window.location.origin;
-        //    }
-        //});
-
         socket.on('force-disconnect',function(data){
             alert(data);
+        });
+
+        socket.on('old-messages', function(data){
+            console.log('old-messages',data);
+            chatHandler.loadMessages(data);
         });
     }
 });

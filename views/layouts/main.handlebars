@@ -18,10 +18,14 @@
             currentUser = {
                 id:'{{{user.id}}}',
                 username:'{{{user.username}}}',
-                token:'{{userToken user.id }}'
+                token:'{{userToken user.id }}',
+                avatar:'{{user.avatar}}'
             };
         </script>
     {{/ifCond}}
+    {{>login}}
+    {{>register}}
+    {{>avatar}}
     <script src="/bower_components/system.js/dist/system.js"></script>
     <script src="/javascripts/main.js"></script>
 </body>

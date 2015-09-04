@@ -1,4 +1,6 @@
 var messageHandler = require('./data/message');
+var postsHandler = require('./data/posts');
+var userHandler = require('./data/user');
 
 function ioHandler(io, activeUsers) {
 
@@ -10,12 +12,12 @@ function ioHandler(io, activeUsers) {
                 tokenFound = false;
 
             if(userId && token){
-                console.log('got user & id for register',userId,token);
+                //console.log('got user & id for register',userId,token);
                 for(var i=0;i<activeUsers.length;i+=1){
                     if(activeUsers[i].id === userId && activeUsers[i].token === token){
-                        console.log('found in active users');
+                        //console.log('found in active users');
                         activeUsers[i].sockets.push(client);
-                        console.log('clearing intervals',activeUsers[i].intervals.length);
+                        //console.log('clearing intervals',activeUsers[i].intervals.length);
                         if(activeUsers[i].intervals.length>0){
                             clearTimeouts(activeUsers[i].intervals.slice(0));
                             activeUsers[i].intervals =[];
@@ -30,9 +32,13 @@ function ioHandler(io, activeUsers) {
             if(!tokenFound){
                 client.emit('force-disconnect', 'wrong token');
             } else {
-                var unreadMessages =  messageHandler.getUnreadMessages(userId)
+                messageHandler.getUnreadMessages(userId)
                     .then(function(unreadMessages){
+
+                        console.log('UNREAD',unreadMessages);
                         client.emit('unread',unreadMessages);
+                    }, function(err){
+                        console.log('err',err);
                     });
             }
         });
@@ -88,10 +94,46 @@ function ioHandler(io, activeUsers) {
             }
         });
 
+        client.on('get-messages', function(data){
+            var socket = getSecureSocket(client,data.token,activeUsers);
+            if(socket){
+                data.myId = getUserId(client, data.token, data.myId, activeUsers);
+                messageHandler.getMessages(data)
+                    .then(function(messages){
+                        messages.messages = messages.messages.reverse() || [];
+
+                        client.emit('old-messages',messages);
+                    });
+            } else {
+                client.disconnect();
+            }
+        });
+
         client.on('seen-all',function(data) {
             var socket = getSecureSocket(client,data.token,activeUsers);
             if(socket){
+                console.log('will unsee',data);
                 messageHandler.seenAll(data);
+            } else {
+                client.disconnect();
+            }
+        });
+
+        client.on('save-post',function(data) {
+            var socket = getSecureSocket(client,data.token,activeUsers);
+            if(socket){
+                data.dateTime = Date.now();
+                postsHandler.savePost(data);
+            } else {
+                client.disconnect();
+            }
+        });
+
+        client.on('change-avatar', function(data){
+            var socket = getSecureSocket(client,data.token,activeUsers);
+            if(socket){
+                console.log('got avatar');
+                userHandler.changeAvatar(data.id, data.url);
             } else {
                 client.disconnect();
             }
@@ -101,20 +143,20 @@ function ioHandler(io, activeUsers) {
 
 module.exports = ioHandler;
 
-//function socketExists(socket, activeUsers, username) {
-//    for (var i = 0; i < activeUsers.length; i+=1) {
-//        if (activeUsers[i].socket === socket) {
-//            return true;
-//        }
-//    }
-//
-//    return false;
-//}
-
 function getSecureSocket(socket,token,activeUsers){
     for(var i=0;i<activeUsers.length; i+=1) {
         if(activeUsers[i].token === token && activeUsers[i].sockets.indexOf(socket)>=0) {
             return socket;
+        }
+    }
+
+    return false;
+}
+
+function getUserId(socket,token, id, activeUsers){
+    for(var i=0;i<activeUsers.length; i+=1) {
+        if(activeUsers[i].token === token && activeUsers[i].id === id) {
+            return id;
         }
     }
 
