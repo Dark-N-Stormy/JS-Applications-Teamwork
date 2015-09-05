@@ -12,7 +12,7 @@ var Chat = Class.extend({
             mouseWheel:{
                 enable: true,
                 preventDefault: true,
-                scrollAmount: 100
+                scrollAmount: 150
             },
             advanced:{
                 updateOnContentResize: true
@@ -35,7 +35,8 @@ var Chat = Class.extend({
                 mouseWheel:{
                     disableOver: [
                         ".chat-messages"
-                    ]
+                    ],
+                    scrollAmount: 150
                 }
             });
 
@@ -108,6 +109,7 @@ var Chat = Class.extend({
                 this.toggleChat($('div[data-partner-id="' + id + '"]'));
             }
         }
+        this.sort();
     },
     toggleChat: function(chat, callback){
         var chatBody = chat.find('.chat-body');
@@ -174,20 +176,20 @@ var Chat = Class.extend({
 
         sender.attr('data-count',count).addClass('has-unread');
 
-        var newChat = this.addChat(id,username,avatar,false);
-        if((count+10) > data.messages.length){
-            newChat.attr('data-has-more-messages',0);
-        } else {
-            newChat.attr('data-has-more-messages',1);
-        }
+        // var newChat = this.addChat(id,username,avatar,false);
+        // if((count+10) > data.messages.length){
+        //     newChat.attr('data-has-more-messages',0);
+        // } else {
+        //     newChat.attr('data-has-more-messages',1);
+        // }
 
-        newChat.attr('data-unread-count',count);
-        newChat.attr('data-shown-messages-count',data.messages.length);
-        newChat.find('.chat-messages')
-            .addClass('needs-scrolling')
-            .append(messages);
-        newChat.removeAttr('data-loading-more-messages');
-        newChat.find('.chat-messages').scrollTop(9999999999999999);
+        // newChat.attr('data-unread-count',count);
+        // newChat.attr('data-shown-messages-count',data.messages.length);
+        // newChat.find('.chat-messages')
+        //     .addClass('needs-scrolling')
+        //     .append(messages);
+        // newChat.removeAttr('data-loading-more-messages');
+        // newChat.find('.chat-messages').scrollTop(9999999999999999);
 
     },
     loadMessages: function(data){
@@ -227,6 +229,7 @@ var Chat = Class.extend({
         } else {
             chat.find('.chat-messages').scrollTop(99999999999999);
         }
+        this.sort();
         //chat.find('.top-most').removeClass('.to-most');
         //chat.find('.chat-messages').scrollTop(chat.find('.chat-messages .chat-message').length * (chat.find('.chat-messages .chat-message').outerHeight()) - scrollBottom);
     },
