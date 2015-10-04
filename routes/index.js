@@ -118,39 +118,39 @@ function router(onlineUsers) {
         res.status(200).send("pong!");
     });
 
-    router.get('/from/:id', function (req, res) {
-        var idFrom = req.params.id;
-        messageData.getMessagesFromUser(idFrom)
-            .then(function (messages) {
-                res.json(messages);
-            });
+    // router.get('/from/:id', function (req, res) {
+    //     var idFrom = req.params.id;
+    //     messageData.getMessagesFromUser(idFrom)
+    //         .then(function (messages) {
+    //             res.json(messages);
+    //         });
 
-    });
+    // });
 
-    router.get('/from/:id', function (req, res) {
-        var idFrom = req.params.id;
-        messageData.getMessagesFromUser(idFrom)
-            .then(function (messages) {
-                res.json(messages);
-            });
-    });
+    // router.get('/from/:id', function (req, res) {
+    //     var idFrom = req.params.id;
+    //     messageData.getMessagesFromUser(idFrom)
+    //         .then(function (messages) {
+    //             res.json(messages);
+    //         });
+    // });
 
-    router.get('/to/:id', function (req, res) {
-        var idTo = req.params.id;
-        messageData.getMessagesToUser(idTo, 5)
-            .then(function (messages) {
-                res.json(messages);
-            });
+    // router.get('/to/:id', function (req, res) {
+    //     var idTo = req.params.id;
+    //     messageData.getMessagesToUser(idTo, 5)
+    //         .then(function (messages) {
+    //             res.json(messages);
+    //         });
 
-    });
+    // });
 
-    router.get('/unread/:id', function (req, res) {
-        var id = req.params.id;
-        messageData.getUnreadMessages(id)
-            .then(function (messages) {
-                res.json(messages);
-            })
-    });
+    // router.get('/unread/:id', function (req, res) {
+    //     var id = req.params.id;
+    //     messageData.getUnreadMessages(id)
+    //         .then(function (messages) {
+    //             res.json(messages);
+    //         })
+    // });
 
     return router;
 }

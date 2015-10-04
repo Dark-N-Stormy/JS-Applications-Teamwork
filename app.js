@@ -36,8 +36,8 @@ var io = require('socket.io')(server);
 var ioHandler = require('./ioHandler')(io,onlineUsers);
 
 
-//db.connect('mongodb://tsn:BkD2#+9hns_E)6Cj@dogen.mongohq.com:10011/tsn');
-db.connect('mongodb://127.0.0.1:27017/tsn');
+db.connect('mongodb://tsn:BkD2#+9hns_E)6Cj@dogen.mongohq.com:10011/tsn');
+// db.connect('mongodb://127.0.0.1:27017/tsn');
 
 var handlebarsConfig = exphbs.create({
     helpers: {
@@ -64,11 +64,23 @@ var handlebarsConfig = exphbs.create({
 
             return day+' '+monthNames[monthIndex]+' '+year;
         },
+        time:function(dateTime){
+            var hour = dateTime.getHours();
+            var minutes = dateTime.getMinutes();
+            return hour+':'+minutes;
+        },
         ifCond: function(v1, v2,options){
             if(v1 && v2) {
                 return options.fn(this);
             }
             return options.inverse(this);
+        },
+        if_eq:function(a, b, opts) {
+            if(a == b){
+                return opts.fn(this);
+            } else {
+                return opts.inverse(this);
+            }
         }
     },
     defaultLayout: 'main'

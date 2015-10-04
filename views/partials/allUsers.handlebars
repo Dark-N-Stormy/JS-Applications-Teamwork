@@ -5,7 +5,7 @@
     {{#each users}}
         <div class="single-user{{#if this.active}} active{{/if}}" data-user-id="{{this.id}}">
             <img src="{{this.avatar}}" width="50" height="50" class="single-user-image">
-            <span class="single-user-username">{{this.username}}</span>
+            <span class="single-user-username" {{#if_eq this.username "missytoy"}}style="color:pink!important;"{{else}}{{/if_eq}}>{{this.username}}</span>
         </div>
     {{/each}}
 </div>

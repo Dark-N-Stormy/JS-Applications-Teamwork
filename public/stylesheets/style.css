@@ -76,6 +76,12 @@ form .btn {
     color:rgba(255,255,255,0.7);
 }
 
+.panel-heading .post-time{
+    clear:both;
+    float:right;
+    color:rgba(255,255,255,0.7);
+}
+
 .panel-body {
     font-size:16px;
 }

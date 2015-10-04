@@ -12,7 +12,7 @@ var Chat = Class.extend({
             mouseWheel:{
                 enable: true,
                 preventDefault: true,
-                scrollAmount: 100
+                scrollAmount: 150
             },
             advanced:{
                 updateOnContentResize: true
@@ -35,7 +35,8 @@ var Chat = Class.extend({
                 mouseWheel:{
                     disableOver: [
                         ".chat-messages"
-                    ]
+                    ],
+                    scrollAmount: 150
                 }
             });
 
@@ -44,9 +45,7 @@ var Chat = Class.extend({
             event.preventDefault();
             var chatMessages = $(this),
                 chat = chatMessages.closest('.chat');
-
-            chatMessages.scrollTop(chatMessages.scrollTop() - event.deltaY * 20);
-
+            chatMessages.scrollTop(chatMessages.scrollTop()-event.deltaY*20);
             if(chatMessages.scrollTop()<=50 && chat.attr('data-has-more-messages')==='1' && chat.attr('data-loading-more-messages')!=='1'){
                 chat.attr('data-loading-more-messages','1');
                 var partner = chat.attr('data-partner-id'),
@@ -110,6 +109,7 @@ var Chat = Class.extend({
                 this.toggleChat($('div[data-partner-id="' + id + '"]'));
             }
         }
+        this.sort();
     },
     toggleChat: function(chat, callback){
         var chatBody = chat.find('.chat-body');
@@ -176,20 +176,20 @@ var Chat = Class.extend({
 
         sender.attr('data-count',count).addClass('has-unread');
 
-        var newChat = this.addChat(id,username,avatar,false);
-        if((count+10) > data.messages.length){
-            newChat.attr('data-has-more-messages',0);
-        } else {
-            newChat.attr('data-has-more-messages',1);
-        }
+        // var newChat = this.addChat(id,username,avatar,false);
+        // if((count+10) > data.messages.length){
+        //     newChat.attr('data-has-more-messages',0);
+        // } else {
+        //     newChat.attr('data-has-more-messages',1);
+        // }
 
-        newChat.attr('data-unread-count',count);
-        newChat.attr('data-shown-messages-count',data.messages.length);
-        newChat.find('.chat-messages')
-            .addClass('needs-scrolling')
-            .append(messages);
-        newChat.removeAttr('data-loading-more-messages');
-        newChat.find('.chat-messages').scrollTop(9999999999999999);
+        // newChat.attr('data-unread-count',count);
+        // newChat.attr('data-shown-messages-count',data.messages.length);
+        // newChat.find('.chat-messages')
+        //     .addClass('needs-scrolling')
+        //     .append(messages);
+        // newChat.removeAttr('data-loading-more-messages');
+        // newChat.find('.chat-messages').scrollTop(9999999999999999);
 
     },
     loadMessages: function(data){
@@ -229,6 +229,9 @@ var Chat = Class.extend({
         } else {
             chat.find('.chat-messages').scrollTop(99999999999999);
         }
+        this.sort();
+        //chat.find('.top-most').removeClass('.to-most');
+        //chat.find('.chat-messages').scrollTop(chat.find('.chat-messages .chat-message').length * (chat.find('.chat-messages .chat-message').outerHeight()) - scrollBottom);
     },
     convertMessagesToHtml: function(messages){
         var dateHelperObject = undefined;
@@ -281,7 +284,7 @@ var Chat = Class.extend({
 
         var chat = $('.chat[data-partner-id="'+data.sender+'"]'),
             chatMessages = chat.find('.chat-body .chat-messages');
-        chat.attr('data-shown-messages-count', chat.attr('data-shown-messages-count')+1);
+
         chatMessages.append(newMessage);
         if(chatMessages.scrollTop() > (chatMessages.find('.chat-message').length * chatMessages.find('.chat-message').outerHeight()-chatMessages.outerHeight()-200)) {
             chatMessages.scrollTop(chatMessages.find('.chat-message').length * chatMessages.find('.chat-message').outerHeight() + chatMessages.height());
