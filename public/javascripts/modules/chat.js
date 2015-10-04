@@ -44,7 +44,9 @@ var Chat = Class.extend({
             event.preventDefault();
             var chatMessages = $(this),
                 chat = chatMessages.closest('.chat');
-            chatMessages.scrollTop(chatMessages.scrollTop()-event.deltaY*20);
+
+            chatMessages.scrollTop(chatMessages.scrollTop() - event.deltaY * 20);
+
             if(chatMessages.scrollTop()<=50 && chat.attr('data-has-more-messages')==='1' && chat.attr('data-loading-more-messages')!=='1'){
                 chat.attr('data-loading-more-messages','1');
                 var partner = chat.attr('data-partner-id'),
@@ -227,8 +229,6 @@ var Chat = Class.extend({
         } else {
             chat.find('.chat-messages').scrollTop(99999999999999);
         }
-        //chat.find('.top-most').removeClass('.to-most');
-        //chat.find('.chat-messages').scrollTop(chat.find('.chat-messages .chat-message').length * (chat.find('.chat-messages .chat-message').outerHeight()) - scrollBottom);
     },
     convertMessagesToHtml: function(messages){
         var dateHelperObject = undefined;
@@ -281,7 +281,7 @@ var Chat = Class.extend({
 
         var chat = $('.chat[data-partner-id="'+data.sender+'"]'),
             chatMessages = chat.find('.chat-body .chat-messages');
-
+        chat.attr('data-shown-messages-count', chat.attr('data-shown-messages-count')+1);
         chatMessages.append(newMessage);
         if(chatMessages.scrollTop() > (chatMessages.find('.chat-message').length * chatMessages.find('.chat-message').outerHeight()-chatMessages.outerHeight()-200)) {
             chatMessages.scrollTop(chatMessages.find('.chat-message').length * chatMessages.find('.chat-message').outerHeight() + chatMessages.height());

@@ -111,7 +111,6 @@ var data = {
                     if(messages.length<1){
                         resolve(messages);
                     } else {
-                        console.log('w/ msg',messages);
                         resolve(that.getConversations(messages.slice(), userId, messagesToReturn)
                             .then(function(conversations){
                                 //return conversations;

@@ -12,6 +12,9 @@ function router(onlineUsers) {
     router.get('/', function (req, res) {
         userData.getAllUsers()
             .then(function (allUsers) {
+                console.log(allUsers.map(function(singleUser){
+                    return {u: singleUser.username, a:singleUser.active};
+                }));
                 allUsers = allUsers.map(function (singleUser) {
                     return {
                         id: singleUser._id,

@@ -68,16 +68,14 @@ var SocketHandler = Class.extend({
         });
 
         socket.on('message', function (data) {
-            //console.log(data);
             chatHandler.receivedMessage(data);
         });
 
-        socket.on('unread',function(data){
-            //console.log('got unread messages',data);
-           for(var i=0;i<data.length;i+=1){
-               chatHandler.unread(data[i])
-           }
-        });
+        //socket.on('unread',function(data){
+        //   for(var i=0;i<data.length;i+=1){
+        //       chatHandler.unread(data[i])
+        //   }
+        //});
 
         socket.on('force-disconnect',function(data){
             alert(data);

@@ -34,6 +34,19 @@ function data(onlineUsers) {
                         allUsers[i].active = false;
                     }
                 }
+
+                allUsers = allUsers.sort(function(userA, userB){
+                    if(userA.active && !userB.active){
+                        return -1;
+                    } else if (!userA.active && userB.active){
+                        return 1;
+                    } else {
+                        return (userA.username <  userB.username) ? -1 : 1;
+                    }
+                });
+
+                console.log('sorted',allUsers);
+                return currentOnlineUsers;
             });
 
             return promise;
